@@ -9,8 +9,63 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Semester {
+  id                   String                 @id @default(cuid())
+  name                 String
+}
+
+model SemesterRequirement {
+  semesterId String
+
+  value      Int
+  category   Category
+  @@id([semesterId, category])
+}
+
+model Event {
+  id         String     @id @default(cuid())
+  semesterId String
+
+  title      String
+  date       DateTime   @default(now())
+  category   Category
+  value      Int
+}
+
+model Attended {
+  userId  String
+  eventId String
+
+  @@id([eventId, userId])
+}
+
+enum Category {
+  PROFESSIONAL_DEVELOPMENT
+  COMMUNITY_SERVICE
+  BROTHERHOOD
+  FUNDRAISING
+  OUTREACH
+  PLEDGE
+}
+
+enum Class {
+  DeltaBeta
+  GammaBeta
+  Omega
+  Psi
+  Chi
+  Phi
+  None
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  ALUM
+}
+
+enum Role {
+  EBOARD
+  CHAIR
+  BROTHER
 }
